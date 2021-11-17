@@ -8,17 +8,21 @@
         return preg_split('/(?<!^)(?!$)/u', $string);
     }
     /*
-    * Функция замены в строке пробелов на подчеркивания
+    * Функция замены в строке символов
     * В качестве параметра получает строку, возвращает преобразованную строку,
-    * в которой пробелы заменены символом подчеркивания
+    * в которой произведена замена символов
     */
-    function fReplaceSpaceUnderline($strSpace = ''):string
+    function fReplace(
+            $strIn,             // строка для замены
+            $charOld = '',      // что необходимо заменить
+            $charNew = ''       // на что заменить
+    ):string
     {
-        $arrStr = mbStrSplit($strSpace);
+        $arrStr = mbStrSplit($strIn);
         $strReturn = '';
         foreach ($arrStr as $strValue) {
-            if ($strValue == ' ') {
-                $strValue = '_';
+            if ($strValue == $charOld) {
+                $strValue = $charNew;
             }
             $strReturn .= $strValue;
         }
@@ -65,7 +69,7 @@
 if (isset($_POST['strIn'])) {
     $strIn = $_POST['strIn'];
     // заменяем
-    $strOut = fReplaceSpaceUnderline($strIn);
+    $strOut = fReplace($strIn, ' ', '_');
     // выводим транслитерацию
     if (!empty($strOut)) {
         echo "<p><b>Исходная строка:</b> $strIn</p>";
