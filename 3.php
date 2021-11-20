@@ -49,7 +49,7 @@
         echo '<ol>';
         // Цикл по городам области
         foreach ($cities as $city) {
-          echo "<li>$city</li>";
+            echo "<li>$city</li>";
         }
         echo '</ol>';
     }

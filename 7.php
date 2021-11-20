@@ -30,5 +30,12 @@
     <hr>
     <span><?= $strResult ?></span>
 <hr>
+<?php
+    // возврат на предыдущую страницу
+    if ( !empty($_SERVER['HTTP_REFERER']) ) {
+        echo '<a href="' . $_SERVER['HTTP_REFERER'] . '" title="Назад"><< Назад</a>';
+    }
+    echo '<hr>';
+?>
 </body>
 </html>

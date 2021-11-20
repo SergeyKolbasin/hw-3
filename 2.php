@@ -43,6 +43,15 @@ $h4 = 'Цикл do...while.';
 </head>
 <body>
 <h4><?= $h4 ?></h4>
+<hr>
 <span><?= "Все числа от 0 до 10: <br> $strResult" ?>
+<hr>
+<?php
+// возврат на предыдущую страницу
+if ( !empty($_SERVER['HTTP_REFERER']) ) {
+    echo '<a href="' . $_SERVER['HTTP_REFERER'] . '" title="Назад"><< Назад</a>';
+}
+?>
+<hr>
 </body>
 </html>

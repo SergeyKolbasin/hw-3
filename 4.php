@@ -112,7 +112,7 @@ if (isset($_POST['strRus'])) {
     // выводим транслитерацию
     if (!empty($strLat)) {
         echo "<p><b>Строка после транслитерации:</b> $strLat</p>";
-        echo '<hr>';
     }
+echo '<hr>';
 }
 ?>
