@@ -1,6 +1,6 @@
 <?php
 /*
- * Здесь мы производим транслитерацию
+ * Общие переменные и функции
  */
 // Массив транслитерации
 $arrTransliteration = [
@@ -38,12 +38,12 @@ $arrTransliteration = [
     'ю' => 'yu' , 'Ю' => 'Yu',
     'я' => 'ya' , 'Я' => 'Ya',
 ];
+//  Функция преобразования строки в массив, поддерживает UTF-8
+function mbStrSplit($string):array
+{
+    return preg_split('/(?<!^)(?!$)/u', $string);
+}
 
-    //  Функция преобразования строки в массив, поддерживает UTF-8
-    function mbStrSplit($string):array
-    {
-        return preg_split('/(?<!^)(?!$)/u', $string);
-    }
     // Функция транслитерации строки, возвращает преобразованную строку
     function fTransliteration(
         $arrTransliteration,  // массив транслитерации
@@ -65,19 +65,7 @@ $arrTransliteration = [
         return $strLat;
     }
 
-/*
- * Здесь мы производим замену пробелов символов подчеркивания
- */
-    // Функция преобразования строки в массив, поддерживает UTF-8
-    function mbStrSplit($string):array
-    {
-        return preg_split('/(?<!^)(?!$)/u', $string);
-    }
-    /*
-    * Функция замены в строке символов
-    * В качестве параметра получает строку, возвращает преобразованную строку,
-    * в которой произведена замена символов
-    */
+    // Функция замены в строке символов, возвращает преобразованную строку
     function fReplace(
         $strIn,             // строка для замены
         $charOld = '',      // что необходимо заменить
@@ -95,6 +83,19 @@ $arrTransliteration = [
         return $strReturn;
     }
 
+/*
+ * Функция преобразования строки в URL
+ */
+function transformURL(
+    $arrTransliteration = [],   // массив для транслитерации
+    $strInput = '',             // входная строка для преобразования
+    $charIn = '',               // какие символы необходимо заменить
+    $charOut = ''               // на что заменить
+):string
+{
+    // преобразуем в урл и возвращаем из функции
+    return fReplace(fTransliteration($arrTransliteration, $strInput), $charIn,$charOut);
+}
 
 ?>
 
@@ -105,24 +106,25 @@ $arrTransliteration = [
     <title>Замена</title>
 </head>
 <body>
-<h4>Замена пробелов:</h4>
+<h4>Преобразование в URL:</h4>
 <hr>
 <p>
-    Напишите функцию, которая заменяет в строке пробелы на подчеркивания и возвращает видоизмененную строчку. <br>
+    Напишите функцию, которая получает строку на русском языке, производит транслитерацию и замену пробелов на
+    подчеркивания (аналогичная задача решается при конструировании url-адресов на основе названия статьи в блогах). <br>
 </p>
 <hr>
 <h4>Решение:</h4>
-<!--Форма ввода строки для транслитерации-->
+<!--Форма ввода строки для преобразования в URL-->
 <fieldset>
-    <legend>Замена пробелов</legend>
+    <legend>Преобразование в URL</legend>
     <form action="" method="post">
         <p>
             <!--Отсутствует проверка наличия только кириллицы-->
-            <label for="strIn">&nbsp;Исходная строка:</label>
-            <input id="strIn" name="strIn" size="128" maxlength="128" type="text"
-                   placeholder="Введите строку для замены"><br><br>
+            <label for="strInput">&nbsp;Исходная строка:</label>
+            <input id="strInput" name="strInput" size="128" maxlength="128" type="text"
+                   placeholder="Введите строку для преобразования в URL"><br><br>
         </p>
-        <input type="submit" value="Заменить">
+        <input type="submit" value="Преобразовать">
     </form>
 </fieldset>
 <hr>
@@ -133,15 +135,17 @@ $arrTransliteration = [
 /*
  * Main
  */
+$strInput = '';                 // входная строка
+$strURL = '';                   // строка, преобразованная в URL
 // Получаем строку из поля ввода
-if (isset($_POST['strIn'])) {
-    $strIn = $_POST['strIn'];
-    // заменяем
-    $strOut = fReplace($strIn, ' ', '_');
-    // выводим транслитерацию
-    if (!empty($strOut)) {
-        echo "<p><b>Исходная строка:</b> $strIn</p>";
-        echo "<p><b>Строка после замены:</b> $strOut</p>";
+if (isset($_POST['strInput'])) {
+    $strInput = $_POST['strInput'];
+    // преобразуем в URL
+    $strURL = transformURL($arrTransliteration, $strInput, ' ', '_');
+    // выводим URL
+    if (!empty($strURL)) {
+        echo "<p><b>Исходная строка:</b> $strInput</p>";
+        echo "<p><b>Строка после замены:</b> $strURL</p>";
         echo '<hr>';
     }
 }
