@@ -1,17 +1,26 @@
 <?php
     // Функция вывода меню
-    function generateMenu($items)
+    /**
+     * Функция генерации меню из многомерного массива
+     * @param   $items  array   многомерный массив из которого нужно сгенерировать меню
+     * @return          string  html-код меню
+     */
+    function generateMenu(
+            array   $items = []
+    ):string
     {
-        echo '<ul>';
+        $strMenu = '';      // html-код меню
+        $strMenu .= '<ul>';
         foreach ($items as $item) {
-            echo '<li>';
-            echo '<a href="' . $item['link'] . '">' . $item['title'] . '</a>';
+            $strMenu .= '<li>';
+            $strMenu .=  '<a href="' . $item['link'] . '">' . $item['title'] . '</a>';
             if(!empty($item['submenu'])) {
-                generateMenu($item['submenu']);
+                $strMenu .= generateMenu($item['submenu']);
             }
-            echo '</li>';
+            $strMenu .= '</li>';
         }
-        echo '</ul>';
+        $strMenu .= '</ul>';
+        return $strMenu;
     }
     // Вложенный ассоциативный массив элементов меню
     $menu = [
@@ -116,7 +125,7 @@
 <h4><i>Меню сайта:</i></h4>
 <?php
     // вызов меню
-    generateMenu($menu);
+    echo generateMenu($menu);
 ?>
 <hr>
 <h4>Подвал сайта</h4>

@@ -38,16 +38,27 @@ $arrTransliteration = [
     'ю' => 'yu' , 'Ю' => 'Yu',
     'я' => 'ya' , 'Я' => 'Ya',
 ];
-//  Функция преобразования строки в массив, поддерживает UTF-8
-function mbStrSplit($string):array
-{
-    return preg_split('/(?<!^)(?!$)/u', $string);
-}
+    /**
+     * Функция преобразования строки в массив, поддерживает UTF-8
+     * @param   $string string  строка для преобразования
+     * @return          array   массив, где каждый элемент string
+     */
+    function mbStrSplit(
+        string  $string = ''            // строка для преобразования
+    ):array
+    {
+        return preg_split('/(?<!^)(?!$)/u', $string);
+    }
 
-    // Функция транслитерации строки, возвращает преобразованную строку
+    /**
+    * Функция транслитерации строки, возвращает преобразованную строку
+    * @param   $arrTransliteration  array      массив транслитерации
+    * @param   $strRus              string     строка, к которой применяется транслитерация
+    * @return                       string     строка - результат транслитерации
+    */
     function fTransliteration(
-        $arrTransliteration,  // массив транслитерации
-        $strRus = ''          // строка, к которой применяется транслитерация
+        array   $arrTransliteration = [],   // массив транслитерации
+        string  $strRus = ''                // строка, к которой применяется транслитерация
     ):string
     {
         $strLat = '';
@@ -65,7 +76,12 @@ function mbStrSplit($string):array
         return $strLat;
     }
 
-    // Функция замены в строке символов, возвращает преобразованную строку
+    /**
+     * Функция замены в строке символов
+     * @param   $strIn   string  строка для замены
+     * @param   $charOld string  что необходимо заменить
+     * @return           string  на что заменить
+     */
     function fReplace(
         $strIn,             // строка для замены
         $charOld = '',      // что необходимо заменить
@@ -83,20 +99,24 @@ function mbStrSplit($string):array
         return $strReturn;
     }
 
-/*
- * Функция преобразования строки в URL
- */
-function transformURL(
-    $arrTransliteration = [],   // массив для транслитерации
-    $strInput = '',             // входная строка для преобразования
-    $charIn = '',               // какие символы необходимо заменить
-    $charOut = ''               // на что заменить
-):string
-{
-    // преобразуем в урл и возвращаем из функции
-    return fReplace(fTransliteration($arrTransliteration, $strInput), $charIn,$charOut);
-}
-
+    /**
+     * Функция преобразования строки в URL
+     * @param   $arrTransliteration array   массив для транслитерации
+     * @param   $strInput           string  входная строка для преобразования
+     * @param   $charIn             string  какие символы необходимо заменить
+     * @param   $charOut            string  на что заменить
+     * @return                      string  преобразованная строка
+     */
+    function transformURL(
+        $arrTransliteration = [],   // массив для транслитерации
+        $strInput = '',             // входная строка для преобразования
+        $charIn = '',               // какие символы необходимо заменить
+        $charOut = ''               // на что заменить
+    ):string
+    {
+        // преобразуем в урл и возвращаем из функции
+        return fReplace(fTransliteration($arrTransliteration, $strInput), $charIn,$charOut);
+    }
 ?>
 
 <!DOCTYPE html>

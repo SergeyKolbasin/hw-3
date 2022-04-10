@@ -39,16 +39,27 @@ $arrTransliteration = [
     'я' => 'ya' , 'Я' => 'Ya',
 ];
 
-//  Функция преобразования строки в массив, поддерживает UTF-8
-function mbStrSplit($string):array
+/**
+ * Функция преобразования строки в массив, поддерживает UTF-8
+ * @param   $string string  строка для преобразования
+ * @return          array   массив, где каждый элемент string
+ */
+function mbStrSplit(
+        string  $string = ''            // строка для преобразования
+):array
 {
     return preg_split('/(?<!^)(?!$)/u', $string);
 }
 
-/* Функция транслитерации строки, возвращает преобразованную строку */
+/**
+ * Функция транслитерации строки, возвращает преобразованную строку
+ * @param   $arrTransliteration  array      массив транслитерации
+ * @param   $strRus              string     строка, к которой применяется транслитерация
+ * @return                       string     строка - результат транслитерации
+ */
 function fTransliteration(
-    $arrTransliteration,  // массив транслитерации
-    $strRus = ''          // строка, к которой применяется транслитерация
+    array   $arrTransliteration = [], // массив транслитерации
+    string  $strRus = ''              // строка, к которой применяется транслитерация
 ):string
 {
     $strLat = '';
