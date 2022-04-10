@@ -1,5 +1,10 @@
 <?php
     // Функция вывода меню
+    /**
+     * Функция генерации меню из многомерного массива
+     * @param   $items  array   многомерный массив из которого нужно сгенерировать меню
+     * @return          string  html-код меню
+     */
     function generateMenu(
             array   $items = []
     ):string
