@@ -3,7 +3,9 @@
  * Здесь мы производим замену пробелов символов подчеркивания
  */
     // Функция преобразования строки в массив, поддерживает UTF-8
-    function mbStrSplit($string):array
+    function mbStrSplit(
+        string  $string=''      //строка для преобразования
+    ):array
     {
         return preg_split('/(?<!^)(?!$)/u', $string);
     }
@@ -13,9 +15,9 @@
     * в которой произведена замена символов
     */
     function fReplace(
-            $strIn,             // строка для замены
-            $charOld = '',      // что необходимо заменить
-            $charNew = ''       // на что заменить
+            string  $strIn = '',        // строка для замены
+            string  $charOld = '',      // что необходимо заменить
+            string  $charNew = ''       // на что заменить
     ):string
     {
         $arrStr = mbStrSplit($strIn);
